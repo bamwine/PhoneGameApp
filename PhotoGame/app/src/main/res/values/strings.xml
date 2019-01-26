@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">PhotoGame</string>
+    <string name="action_settings">Logout</string>
+    <string name="title_activity_lanch">Lanch</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="login">Login</string>
+    <string name="signup">Register</string>
+    <string name="title_activity_caputer">Caputer</string>
+    <string name="card_title">title</string>
+    <string-array name="list">
+        <item>People</item>
+        <item>Nature</item>
+        <item> City Life</item>
+        <item>Love</item>
+        <item>Sports</item>
+        <item>Family</item>
+    </string-array>
+</resources>
