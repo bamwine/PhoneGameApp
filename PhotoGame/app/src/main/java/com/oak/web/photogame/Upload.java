@@ -1,17 +1,14 @@
 package com.oak.web.photogame;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,7 +38,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -182,9 +177,6 @@ void OnlineStorage(String selectedFilePath, EditText location, EditText descript
 
             f = new File(wallpaperDirectory, Calendar.getInstance()
                     .getTimeInMillis() + ".jpg");
-
-
-
 
             f.createNewFile();
             FileOutputStream fo = new FileOutputStream(f);
@@ -332,7 +324,6 @@ void OnlineStorage(String selectedFilePath, EditText location, EditText descript
 
     void setTonull(){
 
-        //imageview .setImageBitmap(null);
         imageview.setImageResource(R.mipmap.ic_launcher);
         location.setText("");
         description.setText("");

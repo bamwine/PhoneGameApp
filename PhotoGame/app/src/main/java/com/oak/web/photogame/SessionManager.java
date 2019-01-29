@@ -4,10 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class SessionManager {
@@ -128,5 +137,34 @@ public class SessionManager {
         }
         return false;
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public File bytetofle(byte[] filename) {
+        //return BitmapFactory.decodeByteArray(filename , 0, filename.length);
+
+        File f = new File(Environment.getExternalStorageDirectory() + "/PhotoGame","bamwine.jpg");
+        try {
+
+            f.createNewFile();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(filename , 0, filename.length);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+return f;
+    }
+
+
+
 
 }

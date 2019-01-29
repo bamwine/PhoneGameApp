@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,18 +55,24 @@ public class Home extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         context = this;
+        startUploadSevice();
 
-        //populate();
         mRecyclerView = (RecyclerView) this.findViewById(R.id.recycler_view);
-        OnlineStorage();
-        //populate();
+       OnlineStorage();
+       //populate();
     }
 
+
+    void startUploadSevice(){
+
+        Intent i= new Intent(context, UploadService.class);
+        context.startService(i);
+    }
 
     void OnlineStorage(){
 
         if(!SessionManager.isNetworkAvailable(this)){
-            adapter2 = new OflineAdapter(this, db.getAllContacts());
+            adapter2 = new OflineAdapter(this, db.getAllcollectionPhotos());
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(adapter2);
@@ -326,11 +331,7 @@ final String article_id=photoclass.getId();
 
                             for(int i=0; i < jsonarray.length(); i++){
                                 response = jsonarray.getJSONObject(i);
-
-
-                                 String s = VoteCount("1", "n");
-
-                                photoclassList.add( new Photoclass(response.getString("id"),response.getString("uname"),response.getString("title"), response.getString("category"), response.getString("descption"), response.getString("location"),response.getString("filename"),response.getString("datetaken"),VoteCount(response.getString("id"),"y"),VoteCount(response.getString("id"),"n")));
+     photoclassList.add( new Photoclass(response.getString("id"),response.getString("uname"),response.getString("title"), response.getString("category"), response.getString("descption"), response.getString("location"),response.getString("filename"),response.getString("datetaken"),response.getString("upvotes"),response.getString("downvotes")));
 
                             }
 
@@ -368,8 +369,19 @@ final String article_id=photoclass.getId();
                     @Override
                     public void onResponse(JSONObject response) {
 
+                        try {
+                            int success = response.getInt("success");
+                            if(success==1){
 
-                        startActivity(new Intent(context,Home.class));
+                                startActivity(new Intent(context,Home.class));
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
 
 
                     }
@@ -398,70 +410,6 @@ final String article_id=photoclass.getId();
         requestQueue.add(jor);
 
 }
-
-
-
-    public String VoteCount(String articleid,String value) {
-
-
-        final String[] k = new String[1];
-
-        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, Constant.GET_App_Votecount+"&articleid="+articleid+"&value="+value, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-
-                        try{
-
-                            JSONArray jsonarray = response.getJSONArray("items");
-
-                            Log.d("Error  jsonarray",response+"");
-
-                            for(int i=0; i < jsonarray.length(); i++){
-                                response = jsonarray.getJSONObject(i);
-                             k[0] = a =response.getString("count");
-
-
-                            }
-
-
-
-
-                        } catch(JSONException e){e.printStackTrace();}
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        // Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
-
-                    }
-                }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-
-                Map<String, String> params = new HashMap<String, String>();
-
-
-
-                return params;
-            }
-
-        };
-
-         requestQueue.add(jor);
-        Toast.makeText(context, k[0], Toast.LENGTH_SHORT).show();
-
-        return k[0];
-    }
-
 
 
 

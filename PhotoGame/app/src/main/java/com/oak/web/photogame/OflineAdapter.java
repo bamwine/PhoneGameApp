@@ -55,20 +55,10 @@ public  class OflineAdapter extends RecyclerView.Adapter<OflineAdapter.MyViewHol
 	@Override
 	public void onBindViewHolder(final MyViewHolder holder, int position) {
 		Photoclass photoclass = photoclassList.get(position);
-
-		//uri = Uri.parse(Constant.GET_SAVE_IMAGES+photoclass.getFilename());
 		holder.title.setText(photoclass.getTitle());
 		holder.content.setText(photoclass.getDescption());
 		holder.ups.setText(photoclass.getUpvotes()); ;
 		holder.downs.setText(photoclass.getDownvotes());
-//holder.image.setImageURI(uri);
-//
-//		Picasso.get()
-//				.load(Constant.GET_SAVE_IMAGES+photoclass.getFilename())
-//				.placeholder(R.drawable.logo)
-//				.error(R.drawable.logo)
-//				.into(holder.image);
-
 		byte[] outImage=photoclass.filename;
 		ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
 		Bitmap theImage = BitmapFactory.decodeStream(imageStream);

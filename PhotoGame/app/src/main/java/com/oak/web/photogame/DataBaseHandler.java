@@ -78,12 +78,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 		values.put(KEY_title, photoclass.title);
 		values.put(KEY_category, photoclass.category);
 		values.put(KEY_descption, photoclass.descption);
-
 		values.put(KEY_location, photoclass.location);
 		values.put(KEY_datetaken, photoclass.datetaken);
 		values.put(KEY_upvotes, photoclass.upvotes);
 		values.put(KEY_downvotes, photoclass.downvotes);
-
 		values.put(KEY_filename, photoclass.filename);
 
 		// Inserting Row
@@ -121,7 +119,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Getting All Contacts
-	public List<Photoclass> getAllContacts() {
+	public List<Photoclass> getAllcollectionPhotos() {
 		List<Photoclass> photoclassList = new ArrayList<Photoclass>();
 		// Select All Query
 		String selectQuery = "SELECT * FROM filesup ORDER BY id ASC";
@@ -152,12 +150,10 @@ photoclassList.add(new Photoclass(cursor.getString(0),cursor.getString(1),cursor
 		values.put(KEY_title, photoclass.getTitle());
 		values.put(KEY_category, photoclass.getCategory());
 		values.put(KEY_descption, photoclass.descption);
-
 		values.put(KEY_location, photoclass.getLocation());
 		values.put(KEY_datetaken, photoclass.getDatetaken());
 		values.put(KEY_upvotes, photoclass.getUpvotes());
 		values.put(KEY_downvotes, photoclass.getDownvotes());
-
 		values.put(KEY_filename, photoclass.getFilename());
 
 		// updating row
@@ -170,7 +166,7 @@ photoclassList.add(new Photoclass(cursor.getString(0),cursor.getString(1),cursor
 	public void deleteContact(Photoclass photoclass) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_UPLOADS, KEY_id + " = ?",
-				new String[] { String.valueOf(photoclass.getId()) });
+				new String[] {photoclass.getId() });
 		db.close();
 	}
 
