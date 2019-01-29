@@ -190,8 +190,8 @@ if (mysql_num_rows($result) > 0) {
 				
 				$item["filename"]	= $row["filename"];
 				$item["datetaken"] 	= $row["datetaken"];
-				$item["upvotes"]	= $row["upvotes"];
-				$item["downvotes"]	= $row["downvotes"];
+				$item["upvotes"]	= votingcount2($row["id"],'y');
+				$item["downvotes"]	= votingcount2($row["id"],'n');
 						
 				
         
@@ -296,12 +296,12 @@ if (mysql_num_rows($result) > 0) {
 				$id	= $row["id"];
            }
      mysql_query("Update voting set vote ='$vote' where id ='$id'") or die(mysql_error());
-     
+     $response["success"] = 1;
 	 
 }
 else {
     $result = mysql_query("Insert into voting(usern, article, vote) values('$username','$article','$vote')");
-     
+     $response["success"] = 1;
 }
 // echoing JSON response
 echo json_encode($response);
@@ -346,6 +346,37 @@ $item = 0;
 }
 // echoing JSON response
 echo json_encode($response);
+
+}	
+?>
+
+
+
+
+
+
+<?php
+function votingcount2($articleid,$value){	
+
+
+$result = mysql_query("SELECT COUNT(*)as count FROM voting WHERE vote='$value' and article='$articleid' GROUP BY vote") or die(mysql_error());
+ $response["items"] = array();
+if (mysql_num_rows($result) > 0) {
+
+while ($row = mysql_fetch_array($result)) {
+$item	= $row["count"];
+
+
+}
+
+return $item;
+} else{
+return 0;
+
+}
+
+
+
 
 }	
 ?>
